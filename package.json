@@ -2,6 +2,9 @@
   "name": "reactdex",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">= 14"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -14,9 +17,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "npm install --prefix client && npm run build --prefix client",
+    "clean": "rm -rf public",
+    "deploy": "cp -a client/build/. public/",
+    "heroku-postbuild": "npm run clean && npm run build && npm run deploy"
   },
   "eslintConfig": {
     "extends": [
