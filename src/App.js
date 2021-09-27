@@ -14,12 +14,17 @@ function App() {
     attack: "",
     defense: "",
     type: "",
+    base_experience: "",
+    height: "",
+    weight: "",
+    shiny: ""
   }); // empty info for pokemon to be assigned on fetch request
 
   // fetch request for pokemon. sets all pokemon info and sets pokemonChosen to true.
   const searchPokemon = () => {
-    Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then(
+    Axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`).then(
       (response) => {
+        console.log(response);
         setPokemon({
           name: pokemonName,
           num: response.data.id,
@@ -29,6 +34,10 @@ function App() {
           attack: response.data.stats[1].base_stat,
           defense: response.data.stats[2].base_stat,
           type: response.data.types[0].type.name,
+          base_experience: response.data.base_experience,
+          height: response.data.height,
+          weight: response.data.weight,
+          shiny: response.data.sprites.front_shiny
         });
         setPokemonChosen(true);
       }
@@ -52,7 +61,6 @@ function App() {
           <h1>Please choose a Pokemon</h1>
         ) : (
           <>
-            <h1>{pokemon.name.toUpperCase()}</h1>
             <img src={pokemon.img} />
             <h3>
               Species:{" "}
@@ -65,6 +73,10 @@ function App() {
             <h4>HP: {pokemon.hp}</h4>
             <h4>Attack: {pokemon.attack}</h4>
             <h4>Defense: {pokemon.defense}</h4>
+            <h4>Base experience: {pokemon.base_experience}</h4>
+            <h4>Weight: {pokemon.weight}</h4>
+            <h4>Height: {pokemon.height}</h4>
+            <img src = {pokemon.shiny} />
           </>
         )}
       </div>
